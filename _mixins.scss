@@ -1,0 +1,129 @@
+// Breakpoints
+// ------------------------------------------
+@mixin min-screen($resolution) {
+  @media screen and (min-width: $resolution) {
+    @content;
+  }
+}
+
+@mixin max-screen($resolution) {
+  @media screen and (max-width: $resolution - 1) {
+    @content;
+  }
+}
+
+// Helpers
+// ------------------------------------------
+@function get-sign($is-negation) {
+  @if ($is-negation) {
+    @return '-';
+  }
+
+  @return '+';
+}
+
+@function get-start-id($is-linear) {
+  @if ($is-linear) {
+    @return 1;
+  }
+
+  @return 2;
+}
+
+@mixin set-properties($properties, $map, $index, $sign) {
+  $keys: map-keys($map);
+
+  @each $property in $properties {
+    $value: map-get($map, nth($keys, $index));
+    #{$property}: #{$sign}#{$value};
+  }
+}
+
+
+@function get-scalabe-map($map) {
+  $keys: map-keys($map);
+
+  @if map_has_key($map, 'interpolation') {
+    @return map-remove($map, 'interpolation');
+  }
+
+  @return $map;
+}
+
+@function is-interpolation($map, $global-interpolation) {
+  $keys: map-keys($map);
+
+  @if map_has_key($map, 'interpolation') {
+    @return map-get($map, 'interpolation');
+  }
+
+  @return $global-interpolation;
+}
+
+
+// Scalable
+// ------------------------------------------
+@mixin scalable($properties, $sscss-map, $global-interpolation: false, $is-negation: false) {
+  $map: get-scalabe-map($sscss-map);
+  $keys: map-keys($map);
+  $length: length($keys);
+  $sign: get-sign($is-negation);
+  $is-interpolation: is-interpolation($sscss-map, $global-interpolation);
+  $start-id: get-start-id($is-interpolation);
+
+  @include set-properties($properties, $map, 1, $sign);
+
+  @if ($length >= $start-id + 1) {
+    @for $i from $start-id through ($length - 1) {
+      $breakpointFrom: nth($keys, $i);
+      $breakpointTo: nth($keys, ($i + 1));
+      $valueFrom: map-get($map, $breakpointFrom);
+      $valueTo: map-get($map, $breakpointTo);
+
+      @media (min-width: $breakpointFrom) {
+        @if ($is-interpolation and $valueFrom != $valueTo) {
+          @each $property in $properties {
+            $linear-map: ($breakpointFrom: $valueFrom, $breakpointTo: $valueTo);
+            #{$property}: linear-interpolation($linear-map, $is-negation);
+          }
+        } @else {
+          @each $property in $properties {
+            #{$property}: #{$sign}#{$valueFrom};
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: nth($keys, $length)) {
+    @include set-properties($properties, $map, $length, $sign);
+  }
+}
+
+// Linear interpolation
+// ------------------------------------------
+@function linear-interpolation($map, $is-negation: false) {
+  $keys: map-keys($map);
+
+  @if (length($keys) != 2) {
+    @error 'linear-interpolation() $map must be exactly 2 values';
+  }
+
+  $y1: map-get($map, nth($keys, 1));
+  $y2: map-get($map, nth($keys, 2));
+  $x1: nth($keys, 1);
+  $x2: nth($keys, 2);
+
+  $m: ($y2 - $y1) / ($x2 - $x1);
+  $b: $y1 - $m * $x1;
+
+  $sign: get-sign($is-negation);
+  $negation-sign: get-sign($is-negation);
+
+  @if ($b < 0) {
+    $b: abs($b);
+    $sign: '-';
+  }
+
+  @return calc(#{$negation-sign}#{$m*100}vw #{$sign} #{$b});
+}

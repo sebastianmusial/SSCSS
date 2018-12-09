@@ -1,0 +1,11 @@
+// Fonts
+// ------------------------------------------
+$sscss-font-size: (
+  'small':    ($mobile: 12px,  $tablet: 14px,  $desktop: 16px,  'interpolation': true),
+  'medium':   ($mobile: 14px,  $tablet: 18px),
+  'big':      ($mobile: 24px),
+);
+
+// Optional global settings
+$sscss-font-interpolation: false;
+$sscss-font-as-class: false;

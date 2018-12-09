@@ -1,0 +1,97 @@
+// Dimenstions
+// --------------------------------------------
+// *  u-{extension}--{name}
+// *  u--{extension}--{name}      (@negation)
+// *  v - vertical
+// *  h - horizontal
+// --------------------------------------------
+$sscss-dimension-positions: (
+  'top':      'top',
+  'right':    'right',
+  'bottom':   'bottom',
+  'left':     'left',
+  'v':        ('top', 'bottom'),
+  'h':        ('right', 'left'),
+  '':         ('top', 'bottom', 'right', 'left'),
+);
+
+$sscss-dimension-properties: (
+  'margin': (
+    'negation': true,
+    'modifiers': $sscss-dimension-positions,
+  ),
+  'padding': (
+    'negation': false,
+    'modifiers': $sscss-dimension-positions,
+  ),
+  'position': (
+    'negation': true,
+    'modifiers': $sscss-dimension-positions,
+  ),
+);
+
+@if variable-exists(sscss-dimension) {
+
+  $interpolation: false;
+  @if variable-exists(sscss-dimension-interpolation) {
+    $interpolation: $sscss-dimension-interpolation;
+  }
+
+  $symbol: '%';
+  @if variable-exists(sscss-dimension-as-class) {
+    @if $sscss-dimension-as-class {
+      $symbol: '.';
+    }
+  }
+
+  @each $property, $settings in $sscss-dimension-properties {
+    $is-negation: map-get($settings, 'negation');
+    $modifiers: map-get($settings, 'modifiers');
+
+    $negation-loop: (false);
+    @if ($is-negation) {
+      $negation-loop: (true, false);
+    }
+
+    @each $negation in $negation-loop {
+      $prefix: 'u-';
+      @if ($negation) { $prefix: 'u--'; }
+
+      @each $name, $value in $sscss-dimension {
+        @if ($property != 'position') {
+          #{$symbol}#{$prefix}#{$property}--#{$name} {
+            @include scalable('#{$property}', $value, $interpolation, $negation);
+          }
+        }
+      }
+
+      @each $position-name, $positions in $modifiers {
+        @each $name, $value in $sscss-dimension {
+          @if ($property == 'position') {
+
+            $modifier-sign: '-';
+            @if ($position-name != '') {
+              $modifier-sign: '--'
+            }
+
+            #{$symbol}#{$prefix}#{$property}#{$modifier-sign}#{$position-name}-#{$name} {
+              @each $position-value in $positions {
+                $sign: get-sign($position-value);
+                @include scalable('#{$position-value}', $value, $interpolation, $negation);
+              }
+            }
+          } @else if($position-name != '') {
+            #{$symbol}#{$prefix}#{$property}--#{$position-name}-#{$name} {
+              @each $position-value in $positions {
+                $sign: get-sign($position-value);
+                @include scalable('#{$property}-#{$position-value}', $value, $interpolation, $negation);
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+}

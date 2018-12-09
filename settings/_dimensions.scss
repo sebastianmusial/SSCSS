@@ -1,0 +1,11 @@
+// Dimensions
+// ------------------------------------------
+$sscss-dimension: (
+  'small':    ($mobile: 4px,   $tablet: 8px,   $desktop: 16px,  'interpolation': true),
+  'medium':   ($mobile: 8px,   $desktop: 32px),
+  'big':      ($mobile: 16px,  $tablet: 32px,  'interpolation': true),
+);
+
+// Optional global settings
+$sscss-dimension-interpolation: false;
+$sscss-dimension-as-class: false;

@@ -1,0 +1,29 @@
+// Fonts
+// ------------------------------------------
+// *  u-font-size--{name}
+// ------------------------------------------
+@if variable-exists(sscss-font-size) {
+
+  $interpolation: false;
+  @if variable-exists(sscss-font-interpolation) {
+    $interpolation: $sscss-font-interpolation;
+  }
+
+  $symbol: '%';
+  @if variable-exists(sscss-font-as-class) {
+    @if $sscss-font-as-class {
+      $symbol: '.';
+    }
+  }
+
+  @each $name, $value in $sscss-font-size {
+    #{$symbol}u-font-size--#{$name} {
+      @if (type-of($value) == 'map') {
+        @include scalable('font-size', $value, $interpolation);
+      } @else {
+        font-size: $value;
+      }
+    }
+  }
+
+}

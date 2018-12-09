@@ -1,0 +1,27 @@
+{
+  "name": "sscss",
+  "version": "0.1.0",
+  "description": "Easy to manage tool for keeping global RWD settings in the projects.",
+  "scripts": {
+    "test": "sass --watch styles.scss:styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastianmusial/SSCSS.git"
+  },
+  "keywords": [
+    "scss",
+    "css",
+    "sscss",
+    "styleguide",
+    "stylesheet",
+    "scss-template",
+    "scss-styles"
+  ],
+  "author": "Sebastian Musiał",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebastianmusial/SSCSS/issues"
+  },
+  "homepage": "https://github.com/sebastianmusial/SSCSS#readme"
+}

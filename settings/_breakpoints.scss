@@ -1,0 +1,20 @@
+// Breakpoints
+// ------------------------------------------
+// * device
+// * device-small
+// * device-medium
+// * device-big
+// ------------------------------------------
+$mobile: 320px;
+$tablet: 768px;
+$desktop: 1024px;
+$full-hd: 1920px;
+
+// Breakpoints map
+// ------------------------------------------
+$breakpoints: (
+  'mobile': $mobile,
+  'tablet': $tablet,
+  'desktop': $desktop,
+  'full-hd': $full-hd,
+);
