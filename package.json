@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Easy to manage tool for keeping global RWD settings in the projects.",
   "scripts": {
-    "test": "sass --watch styles.scss:styles.css"
+    "test": "sass --watch example/styles.scss:example/styles.css"
   },
   "repository": {
     "type": "git",
