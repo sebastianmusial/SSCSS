@@ -15,9 +15,8 @@ In the app you can use:
 
 Create your own `_core.scss` file with imports:
 ```
-@import '~sscss/mixins';
 @import 'your-own-variables-and-settings';
-@import '~sscss/generator';
+@import '~sscss/sscss';
 ```
 The file should be imported in all components where you will use sscss extensions.
 
