@@ -1,6 +1,6 @@
 # SSCSS ❤️ Scalable SCSS
 
-SCSS is a small, easy to manage tool for keeping global RWD settings in the projects based on SCSS.<br>
+SSCSS is a small, easy to manage tool for keeping global RWD settings in the projects based on SCSS.<br>
 Now your dimensions of margins, paddings, positions or fonts sizes can be consistent in the whole application.
 
 In the app you can use:
