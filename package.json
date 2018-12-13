@@ -1,6 +1,6 @@
 {
   "name": "sscss",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Easy to manage tool for keeping global RWD settings in the projects.",
   "scripts": {
     "test": "sass --watch example/styles.scss:example/styles.css"
