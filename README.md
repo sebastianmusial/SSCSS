@@ -7,6 +7,10 @@
   The light Sass library for managing your sizes and dimensions across breakpoints.
 </p>
 
+<p align="center">
+	<a href="https://medium.com/@sebastianmusia/how-to-style-modern-applications-in-a-simple-way-f93e95cd6962" target="blank">How to style modern applications in a simple way?</a>
+</p>
+
 ## Installation
 
 `npm i sscss`
@@ -71,7 +75,7 @@ $sscss-dimension-as-class: false;
 
 ## Usage
 
-<details><summary>Fonts</summary>
+<details open><summary>Fonts</summary>
 
 Name is generated based on a `$sscss-font-size` variable.
 
@@ -80,7 +84,7 @@ Name is generated based on a `$sscss-font-size` variable.
 | `@extend %u-font-size--{name}` | `.u-font-size--{name}` | `.%u-font-size--{name}` |
 </details>
 
-<details><summary>Paddings</summary>
+<details open><summary>Paddings</summary>
 
 Name is generated based on a `$sscss-dimension` variable.
 
@@ -95,7 +99,7 @@ Name is generated based on a `$sscss-dimension` variable.
 | `@extend %u-padding--h-{name}` | `.u-padding--h-{name}` |  Padding right, left (horizontal) |
 </details>
 
-<details><summary>Margins</summary>
+<details open><summary>Margins</summary>
 
 Name is generated based on a `$sscss-dimension` variable.
 
@@ -117,7 +121,7 @@ Name is generated based on a `$sscss-dimension` variable.
 | `@extend %u--margin--h-{name}` | `.u--margin--h-{name}` | Negative value of margin right, left (horizontal) |
 </details>
 
-<details><summary>Positions</summary>
+<details open><summary>Positions</summary>
 
 Name is generated based on a `$sscss-dimension` variable.
 
