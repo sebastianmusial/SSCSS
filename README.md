@@ -8,7 +8,8 @@
 </p>
 
 <p align="center">
-	<a href="https://medium.com/@sebastianmusia/how-to-style-modern-applications-in-a-simple-way-f93e95cd6962" target="blank">How to style modern applications in a simple way?</a>
+	<strong>@Articles:</strong><br>
+  <a href="https://medium.com/@sebastianmusia/how-to-style-modern-applications-in-a-simple-way-f93e95cd6962" target="blank">How to style modern applications in a simple way?</a>
 </p>
 
 ## Installation
