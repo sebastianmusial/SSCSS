@@ -30,12 +30,20 @@
   @return 2;
 }
 
-@mixin set-properties($properties, $map, $index, $sign) {
+@mixin set-properties($properties, $map, $index, $sign, $is-multiple: false) {
   $keys: map-keys($map);
 
   @each $property in $properties {
     $value: map-get($map, nth($keys, $index));
-    #{$property}: #{$sign}#{$value};
+    @if not($is-multiple) {
+      #{$property}: #{$sign}#{$value};
+    } @else  {
+      $single-value: map-get($value, $property);
+
+      @if $single-value {
+        #{$property}: #{$sign}#{$single-value};
+      }
+    }
   }
 }
 
@@ -63,7 +71,7 @@
 
 // Scalable
 // ------------------------------------------
-@mixin scalable($properties, $sscss-map, $global-interpolation: false, $is-negation: false) {
+@mixin scalable($properties, $sscss-map, $global-interpolation: false, $is-negation: false, $is-multiple: false) {
   $map: get-scalabe-map($sscss-map);
   $keys: map-keys($map);
   $length: length($keys);
@@ -71,24 +79,51 @@
   $is-interpolation: is-interpolation($sscss-map, $global-interpolation);
   $start-id: get-start-id($is-interpolation);
 
-  @include set-properties($properties, $map, 1, $sign);
+  @include set-properties($properties, $map, 1, $sign, $is-multiple);
 
   @if ($length >= $start-id + 1) {
     @for $i from $start-id through ($length - 1) {
       $breakpointFrom: nth($keys, $i);
       $breakpointTo: nth($keys, ($i + 1));
+
       $valueFrom: map-get($map, $breakpointFrom);
       $valueTo: map-get($map, $breakpointTo);
+
+      @if ($is-multiple) {
+        $valueFrom: map-get($map, $breakpointFrom);
+        $valueTo: map-get($map, $breakpointTo);
+      }
 
       @media (min-width: $breakpointFrom) {
         @if ($is-interpolation and $valueFrom != $valueTo) {
           @each $property in $properties {
-            $linear-map: ($breakpointFrom: $valueFrom, $breakpointTo: $valueTo);
-            #{$property}: linear-interpolation($linear-map, $is-negation);
+            @if not($is-multiple) {
+              $linear-map: ($breakpointFrom: $valueFrom, $breakpointTo: $valueTo);
+              #{$property}: linear-interpolation($linear-map, $is-negation);
+            } @else {
+              @if ($global-interpolation) {
+                $linear-map: ($breakpointFrom: map-get($valueFrom, $property), $breakpointTo: map-get($valueTo, $property));
+                #{$property}: linear-interpolation($linear-map, $is-negation);
+              } @else {
+                $single-value: map-get($valueFrom, $property);
+
+                @if $single-value {
+                  #{$property}: #{$sign}#{$single-value};
+                }
+              }
+            }
           }
         } @else {
           @each $property in $properties {
-            #{$property}: #{$sign}#{$valueFrom};
+            @if not($is-multiple) {
+              #{$property}: #{$sign}#{$valueFrom};
+            } @else {
+              $single-value: map-get($valueFrom, $property);
+
+              @if $single-value {
+                #{$property}: #{$sign}#{$single-value};
+              }
+            }
           }
         }
       }
@@ -96,7 +131,7 @@
   }
 
   @media (min-width: nth($keys, $length)) {
-    @include set-properties($properties, $map, $length, $sign);
+    @include set-properties($properties, $map, $length, $sign, $is-multiple);
   }
 }
 

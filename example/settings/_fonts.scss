@@ -6,6 +6,41 @@ $sscss-font-size: (
   'big':      ($mobile: 24px),
 );
 
+$sscss-font: (
+  'small': (
+    $mobile: (
+      'font-size': 7px,
+      'line-height': 7px,
+    ),
+    $tablet: (
+      'font-size': 14px,
+    ),
+    $desktop: (
+      'font-size': 28px,
+      'line-height': 28px,
+    ),
+  ),
+  'medium': (
+    $mobile:  (
+      'font-size': 16px,
+      'letter-spacing': 0.1em,
+      'line-height': 1.4,
+    ),
+    $tablet: (
+      'font-size': 18px,
+      'letter-spacing': 0.15em,
+      'line-height': 2.4,
+    ),
+  ),
+  'big': (
+    $mobile: (
+      'font-size': 25px,
+      'letter-spacing': 0.15em,
+      'line-height': 2.4,
+    ),
+  ),
+);
+
 // Optional global settings
 $sscss-font-interpolation: false;
 $sscss-font-as-class: false;

@@ -1,6 +1,7 @@
 // Global styles
 // ------------------------------------------
 body {
-  @extend %u-font-size--small;
+  // @extend %u-font-size--small;
+  @extend %u-font--small;
   @extend %u-padding--small;
 }
