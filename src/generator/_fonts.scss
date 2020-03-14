@@ -27,3 +27,29 @@
   }
 
 }
+
+// ------------------------------------------
+// *  u-font--{name}
+// ------------------------------------------
+@if variable-exists(sscss-font) {
+  $interpolation: false;
+  @if variable-exists(sscss-font-interpolation) {
+    $interpolation: $sscss-font-interpolation;
+  }
+
+  $symbol: '%';
+  @if variable-exists(sscss-font-as-class) {
+    @if $sscss-font-as-class {
+      $symbol: '.';
+    }
+  }
+
+  @each $name, $value in $sscss-font {
+    #{$symbol}u-font--#{$name} {
+      @include scalable('letter-spacing', $value, false, false, true);
+      @include scalable('line-height', $value, false, false, true);
+      @include scalable('font-size', $value, $interpolation, false, true);
+    }
+  }
+
+}
